@@ -5,6 +5,7 @@ namespace Tickets.Data
 {
     public class SeedDB
     {
+        public int cont = 0;
         private readonly DataContext _context;
         private readonly TicketHelper _ticketHelper;
 
@@ -50,7 +51,18 @@ namespace Tickets.Data
 
             return ticket;
         }
-
+        private async Task CheckListTicketsAsync()
+        {
+             
+            while (cont < 5000)
+            if (!_context.ListTickets.Any())
+            {
+                _context.ListTickets.Add(new ListTicket { "1" });
+                
+                await _context.SaveChangesAsync();
+                    cont ++;
+            }
+        }
 
     }
 }
